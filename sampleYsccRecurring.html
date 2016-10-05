@@ -1,0 +1,319 @@
+
+
+<html>
+ 
+<head>
+<meta http-equiv="Content-Language" content="en-us">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<title>QA Testing Merchant</title>
+</head>
+ 
+<body link="#000080" vlink="#000080" alink="#000080" text="#000000" bgcolor="#D4D7E4">
+ 
+<form name="epayform" action="[UMformURL]" method="POST" onSubmit="document.epayform.submitbutton.value='Please Wait... Processing';" autocomplete="off">
+<input type="hidden" name="UMsubmit" value="1">
+<input type="hidden" name="UMkey" value="[UMkey]">
+<input type="hidden" name="UMredirDeclined" value="[UMredirDeclined]">
+<input type="hidden" name="UMredirApproved" value="[UMredirApproved]">
+<input type="hidden" name="UMhash" value="[UMhash]">
+<input type="hidden" name="UMcommand" value="[UMcommand]">
+<input type="hidden" name="UMamount" value="[UMamount]">
+<input type="hidden" name="UMtax" value="[UMtax]">
+<input type="hidden" name="UMinvoice" value="[UMinvoice]">
+<input type="hidden" name="UMcustid" value="[UMcustid]">
+<input type="hidden" name="UMrecurring" value="[UMrecurring]">
+<input type="hidden" name="UMaddcustomer" value="yes">
+<input type="hidden" name="UMbillamount" value="[UMbillamount]">
+<input type="hidden" name="UMcustreceipt" value="[UMcustreceipt]">
+<input type="hidden" name="UMschedule" value="[UMschedule]">
+<input type="hidden" name="UMnumleft" value="[UMnumleft]">
+<input type="hidden" name="UMstart" value="[UMstart]">
+<input type="hidden" name="UMexpire" value="[UMexpire]">
+<input type="hidden" name="UMdescription" value="[UMdescription]">
+<input type="hidden" name="UMechofields" value="[UMechofields]">
+<input type="hidden" name="UMformString" value="[UMformString]">
+<div align="center">
+    <table border="0" width="700" cellpadding="4" cellspacing="0">
+        <tr>
+            <td bgcolor="#9999FF" width="692" colspan="2">
+            <b>
+            <font face="Verdana, Arial" color="#FFFFFF" size="6">QA Testing Merchant</font>
+            <font face="Verdana, Arial" color="#FFFFFF" size="4"><br>
+            Secure Payment Form</font></b></td>
+        </tr>
+        <tr>
+            <td bgcolor="#C4C7D4" width="692" colspan="2">
+            <p align="center">
+            <img border="0" src="/images/visa.gif" width="44" height="28" hspace="3">           <img border="0" src="/images/mastercard.gif" width="44" height="28" hspace="3">         <img border="0" src="/images/amex.gif" width="44" height="28" hspace="3">           <img border="0" src="/images/discover.gif" width="44" height="28" hspace="3">                                   </td>
+        </tr>
+        <tr>
+            <td bgcolor="#F0F0F0" width="692" colspan="2">&nbsp;</td>
+        </tr>
+        <tr>
+            <td bgcolor="#C4C7D4" width="692" colspan="2">
+            <b><font face="Verdana, Arial, Helvetica">Order Summary:</font></b></td>
+        </tr>
+        <tr>
+            <td bgcolor="#F0F0F0" width="234" align="right"><font size="2" face="Verdana">Order Date:</font></td>
+            <td bgcolor="#F0F0F0" width="450">[UMorderdate]
+            </td>
+        </tr>
+        <tr>
+            <td bgcolor="#F0F0F0" width="234" align="right"><font size="2" face="Verdana">Order Amount:</font></td>
+            <td bgcolor="#F0F0F0" width="450"><input type="text" name="UMamount" size="27" value="[UMamount]">
+            </td>
+        </tr>
+        <tr>
+            <td bgcolor="#F0F0F0" width="234" align="right"><font size="2" face="Verdana">Order Number:</font></td>
+            <td bgcolor="#F0F0F0" width="450">[UMinvoice]&nbsp;</td>
+        </tr>
+        <tr>
+            <td bgcolor="#F0F0F0" width="234" align="right"><font size="2" face="Verdana">Customer IP: </font></td>
+            <td bgcolor="#F0F0F0" width="450">[UMclientip]&nbsp;</td>
+        </tr>
+        <tr>
+            <td bgcolor="#F0F0F0" width="234" align="right"><font size="2" face="Verdana">Description: </font></td>
+            <td bgcolor="#F0F0F0" width="450">[UMdescription]&nbsp;</td>
+        </tr>
+        <tr>
+            <td bgcolor="#F0F0F0" width="234">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            </td>
+            <td bgcolor="#F0F0F0" width="450">&nbsp;</td>
+        </tr>
+ 
+<tr>
+            <td bgcolor="#C4C7D4" width="692" colspan="2"><font face="Verdana"><b>Recurring Payment Information:</b></font></td>
+        </tr>
+        <tr>
+            <td bgcolor="#F0F0F0" width="234" align="right"><font face="Verdana" size="2">Schedule:</font></td>
+            <td bgcolor="#F0F0F0" width="450"><select name="UMschedule"> <option value="daily">daily</option>
+<option value="weekly">weekly</option>
+<option value="biweekly">biweekly</option>
+<option value="monthly">monthly</option>
+<option value="bimonthly">bimonthly</option>
+<option value="quarterly">quarterly</option>
+<option value="biannually">biannually</option>
+<option value="annually">annually</option>
+</select></td>
+        </tr>
+        <tr>
+            <td bgcolor="#F0F0F0" width="234" align="right"><font face="Verdana" size="2">Recurring Amount(if different from initial order amount):</font></td>
+            <td bgcolor="#F0F0F0" width="450">
+            <input type="text" name="UMbillamount" size="20" value="[UMbillamount]"></td>
+        </tr>
+        <tr>
+            <td bgcolor="#F0F0F0" width="234" align="right"><font face="Verdana" size="2">Start date("next" for this charge to be the first payment on the selected schedule):</font></td>
+            <td bgcolor="#F0F0F0" width="450">
+            <input type="text" name="UMstart" value="next" /></td>
+        </tr>
+        <tr>
+            <td bgcolor="#F0F0F0" width="234" align="right"><font face="Verdana" size="2">Number of payments(* for unlimited, this payment does not count towards the total):</font></td>
+            <td bgcolor="#F0F0F0" width="450">
+            <input type="text" name="UMnumleft" value="*" size="10" /></td>
+        </tr>
+        <tr>
+            <td bgcolor="#F0F0F0" width="692" colspan="2"><font face="Verdana" size="2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            </font></td>
+        </tr>
+        <tr>
+            <td bgcolor="#F0F0F0" width="234">&nbsp; </td>
+            <td bgcolor="#F0F0F0" width="450">&nbsp;</td>
+        </tr>
+ 
+ 
+[echeck]        
+        <tr>
+            <td bgcolor="#C4C7D4" width="692" colspan="2"><b><font face="Verdana, Arial">Checking Account 
+            Information:</font> [hascreditcards]&nbsp;&nbsp;&nbsp;&nbsp;<input type="submit" name="action" value="Pay By Credit Card">[/hascreditcards]</b></td>
+        </tr>
+        <input type="hidden" name="paybycheck" value="1">
+        <tr><td align=center colspan=2 bgcolor="#F0F0F0"><img src="/images/samplecheck.gif" alt=""></td></tr>
+        <tr>
+            <td bgcolor="#F0F0F0" width="234" align="right"><font face="Verdana" size="2">Account Holder Name:
+            </font></td>
+            <td bgcolor="#F0F0F0" width="450">
+            <input type="text" name="UMname" size="25" value="[UMname]"></td>
+        </tr>
+        <tr>
+            <td bgcolor="#F0F0F0" width="234" align="right"><font face="Verdana" size="2">Bank Routing Number:
+            </font></td>
+            <td bgcolor="#F0F0F0" width="450">
+            <input type="text" name="UMrouting" size="25"></td>
+        </tr>
+        <tr>
+            <td bgcolor="#F0F0F0" width="234" align="right"><font face="Verdana" size="2">Bank Account Number:
+            </font></td>
+            <td bgcolor="#F0F0F0" width="450">
+            <input type="text" name="UMaccount" size="25"></td>
+        </tr>
+        <tr>
+            <td bgcolor="#F0F0F0" width="234" align="right"><font face="Verdana" size="2">Social Security Number:
+            </font></td>
+            <td bgcolor="#F0F0F0" width="450">
+            <input type="text" name="UMssn" size="11"></td>
+        </tr>
+        <tr>
+            <td bgcolor="#F0F0F0" width="234" align="right"><font face="Verdana" size="2">Drivers License Number:
+            </font></td>
+            <td bgcolor="#F0F0F0" width="450">
+            <input type="text" name="UMdlnum" size="15"></td>
+        </tr>           
+        <tr>
+            <td bgcolor="#F0F0F0" width="234" align="right"><font face="Verdana" size="2">Drivers License State:
+            </font></td>
+            <td bgcolor="#F0F0F0" width="450">
+            <input type="text" name="UMdlstate" size="2"></td>
+        </tr>
+[/echeck]
+[creditcard]                    
+        <tr>
+            <td bgcolor="#C4C7D4" width="692" colspan="2"><b><font face="Verdana, Arial">Credit Card 
+            Information:</font> [haschecks]&nbsp;&nbsp;&nbsp;&nbsp;<input type="submit" name="action" value="Pay By Check">[/haschecks]</b></td>
+        </tr>
+        <input type="hidden" name="paybycredit" value="1">
+ 
+        <tr>
+            <td bgcolor="#F0F0F0" width="234" align="right"><font size="2" face="Verdana">Card Type:</font></td>
+            <td bgcolor="#F0F0F0" width="450">
+ 
+                <p><select size="1" name="payment_type">
+                <option value="Visa">Visa</option>              <option value="MasterCard">MasterCard</option>              <option value="American Express">American Express</option>              <option value="Discover">Discover</option>                                              </select></p>
+ 
+            </td>
+        </tr>
+        <tr>
+            <td bgcolor="#F0F0F0" width="234" align="right"><font face="Verdana" size="2">Name as on Card:
+            </font></td>
+            <td bgcolor="#F0F0F0" width="450">
+            <input type="text" name="UMname" size="25" value="[UMname]"></td>
+        </tr>
+        <tr>
+            <td bgcolor="#F0F0F0" width="234" align="right"><font face="Verdana" size="2">Card Billing Address:
+            </font></td>
+            <td bgcolor="#F0F0F0" width="450">
+            <input type="text" name="UMstreet" size="25" value="[UMstreet]"></td>
+        </tr>
+        <tr>
+            <td bgcolor="#F0F0F0" width="234" align="right"><font face="Verdana" size="2">Card Billing Zipcode:
+            </font></td>
+            <td bgcolor="#F0F0F0" width="450">
+            <input type="text" name="UMzip" size="10" value="[UMzip]"></td>
+        </tr>
+        <tr>
+            <td bgcolor="#F0F0F0" width="234" align="right"><font face="Verdana" size="2">Card Number:</font></td>
+            <td bgcolor="#F0F0F0" width="450">
+            <input type="text" name="UMcard" size="17"></td>
+        </tr>
+        <tr>
+            <td bgcolor="#F0F0F0" width="234" align="right"><font face="Verdana" size="2">Card Expiration 
+            Date: </font></td>
+            <td bgcolor="#F0F0F0" width="450">
+            <input type="text" name="UMexpir" size="4"> MMYY</td>
+        </tr>
+        <tr>
+            <td bgcolor="#F0F0F0" width="234" align="right"><font face="Verdana"><font size="2">
+            Card ID (CVV2/CID) Number:<br>
+&nbsp;</font><font size="1">[<a target="_blank" href="/cvv.htm">What is the Card 
+            ID?</a>]</font></font></td>
+            <td bgcolor="#F0F0F0" width="450">
+            <input type="text" name="UMcvv2" size="5"></td>
+        </tr>
+        <tr>
+            <td bgcolor="#F0F0F0" width="692" colspan="2">&nbsp;&nbsp;&nbsp; </td>
+        </tr>
+[/creditcard]
+        <tr>
+            <td bgcolor="#C4C7D4" width="692" colspan="2"><font face="Verdana"><b>Billing Information:</b></font></td>
+        </tr>
+        <tr>
+            <td bgcolor="#F0F0F0" width="234" align="right"><font face="Verdana" size="2">Company Name:</font></td>
+            <td bgcolor="#F0F0F0" width="450">
+            <input type="text" name="UMbillcompany" size="28" value="[UMbillcompany]"></td>
+        </tr>
+        <tr>
+            <td bgcolor="#F0F0F0" width="234" align="right"><font face="Verdana" size="2">First Name:</font></td>
+            <td bgcolor="#F0F0F0" width="450">
+            <input type="text" name="UMbillfname" size="20" value="[UMbillfname]"></td>
+        </tr>
+        <tr>
+            <td bgcolor="#F0F0F0" width="234" align="right"><font face="Verdana" size="2">Last Name:</font></td>
+            <td bgcolor="#F0F0F0" width="450">
+            <input type="text" name="UMbilllname" size="27" value="[UMbilllname]"></td>
+        </tr>
+        <tr>
+            <td bgcolor="#F0F0F0" width="234" align="right"><font face="Verdana" size="2">Address:</font></td>
+            <td bgcolor="#F0F0F0" width="450">
+            <input type="text" name="UMbillstreet" size="25" value="[UMbillstreet]"></td>
+        </tr>
+        <tr>
+            <td bgcolor="#F0F0F0" width="234" align="right"><font face="Verdana" size="2">Address Line 2:</font></td>
+            <td bgcolor="#F0F0F0" width="450">
+            <input type="text" name="UMbillstreet2" size="20" value="[UMbillstreet2]"></td>
+        </tr>
+        <tr>
+            <td bgcolor="#F0F0F0" width="234" align="right"><font face="Verdana" size="2">City:</font></td>
+            <td bgcolor="#F0F0F0" width="450">
+            <input type="text" name="UMbillcity" size="29" value="[UMbillcity]"></td>
+        </tr>
+        <tr>
+            <td bgcolor="#F0F0F0" width="234" align="right"><font face="Verdana" size="2">State:</font></td>
+            <td bgcolor="#F0F0F0" width="450">
+            <input type="text" name="UMbillstate" size="20" value="[UMbillstate]"></td>
+        </tr>
+        <tr>
+            <td bgcolor="#F0F0F0" width="234" align="right"><font face="Verdana" size="2">Zip:</font></td>
+            <td bgcolor="#F0F0F0" width="450">
+            <input type="text" name="UMbillzip" size="11" value="[UMbillzip]"></td>
+        </tr>
+        <tr>
+            <td bgcolor="#F0F0F0" width="234" align="right"><font face="Verdana" size="2">Country:</font></td>
+            <td bgcolor="#F0F0F0" width="450">
+            <input type="text" name="UMbillcountry" size="26" value="[UMbillcountry]"></td>
+        </tr>
+        <tr>
+            <td bgcolor="#F0F0F0" width="234" align="right"><font face="Verdana" size="2">Phone Number:</font></td>
+            <td bgcolor="#F0F0F0" width="450">
+            <input type="text" name="UMbillphone" size="20" value="[UMbillphone]"></td>
+        </tr>
+        <tr>
+            <td bgcolor="#F0F0F0" width="234" align="right"><font face="Verdana" size="2">Email Address:</font></td>
+            <td bgcolor="#F0F0F0" width="450">
+            <input type="text" name="UMemail" size="20" value="[UMemail]"></td>
+        </tr>
+        <tr>
+            <td bgcolor="#F0F0F0" width="692" colspan="2"><font face="Verdana" size="2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            </font></td>
+        </tr>
+        <tr>
+            <td bgcolor="#F0F0F0" width="234">&nbsp; </td>
+            <td bgcolor="#F0F0F0" width="450">&nbsp;</td>
+        </tr>
+        <tr>
+            <td bgcolor="#F0F0F0" width="692" colspan="2">
+                            <p align="center">
+                            <input type="submit" name="submitbutton" value="Process Payment &gt;&gt;"></p>
+                            <hr>
+            </td>
+        </tr>
+        <tr>
+            <td bgcolor="#FFFFFF" width="692" colspan="2">
+            <div align="center">
+                <table border="0" cellspacing="1" width="100%">
+                    <tr>
+                        <td>
+                                                </td>
+                        <td width="84">
+                        <p align="right">
+            <img border="0" src="/images/padonly.gif" width="84" height="96" align="absmiddle"></td>
+                    </tr>
+                </table>
+            </div>
+            </td>
+        </tr>
+    </table>
+</div>
+ 
+</body>
+ 
+</html>
+
