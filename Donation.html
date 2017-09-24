@@ -24,6 +24,9 @@ You can also pay for high holiday tickets or sponsor Shabbat Kiddush through the
                     <div>
                         <table>
                             <tr>
+				<td colspan="2"><b><font size="2"color="#ff0000">* </font>Donation Amount:</b>&nbsp;<input type="text" name="UMamount" id="AmountId" value="0.00">
+
+				<!--
                                 <td colspan="2"><b><font size="2"color="#ff0000">* </font>Donation Amount:</b><br>
                                 <input type="radio" name="RadioAmount" value="18.00"> $18<br>
                                 <input type="radio" name="RadioAmount" value="36.00"> $36<br>
@@ -37,6 +40,7 @@ You can also pay for high holiday tickets or sponsor Shabbat Kiddush through the
                                 <input type="radio" name="RadioAmount" value="5000.00"> $5,000<br>
                                 <input type="radio" name="RadioAmount" value="10000.00"> $10,000<br>
                                 <input type="radio" name="RadioAmount" value="other"> Other: <input type="text" name="OtherAmount" id="OtherAmountId" onclick="EnableOtherAmount()" value="0.00"></td>
+				-->
                             </tr>
                             <tr>
                                 <td colspan="2"><b>Donation Purpose:</b><br>
@@ -61,7 +65,7 @@ You can also pay for high holiday tickets or sponsor Shabbat Kiddush through the
                             <tr>
                                 <td colspan="2"><b>Donation Frequency</b><br>
                                 <input type="radio" name="frequency" value="One-time" checked="checked" onclick="ShowHideFreq(true)"> One-time<br>
-                                <input type="radio" name="frequency" id="frequency" value="Recurring" onclick="ShowHideFreq(false)"> Recurring<br>
+                                <!--<input type="radio" name="frequency" id="frequency" value="Recurring" onclick="ShowHideFreq(false)"> Recurring<br>-->
                                 <div id="freq" style="display: none">
                                 <span style="display:inline-block; padding-left: 2em;">
 				<input type="checkbox" name="UMaddcustomer" id="umaddcustomer" disabled="disabled" size="20" value="yes">Add Customer<br>
@@ -79,7 +83,7 @@ You can also pay for high holiday tickets or sponsor Shabbat Kiddush through the
                                 </font>
                                 </span>
                                 </div>
-                                <!-- input type="radio" name="frequency" value="Recurring Yearly" disabled> Recurring Yearly - Feature currently unavailable<br></td>-->
+                                <input type="radio" name="frequency" value="Recurring Yearly" disabled> Recurring Yearly - Feature currently unavailable<br></td>
                             </tr>
                             <tr>
                                 <td colspan="2"><b>Anonymous</b><br>

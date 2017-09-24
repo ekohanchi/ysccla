@@ -35,7 +35,17 @@ function addqty(field, qtyfield) {
 	 collectPurpose();
  }
 
- function verifyAmount() {	 
+function verifyAmount() {
+	var isChecked=false;
+	var amount=0;
+	amount=document.getElementById("AmountId").value;
+	if (!(Boolean(amount>0))) {
+		alert("Enter a value amount & make sure it is greater than 0.00. Current amount value is set to: " + amount);
+		return false;
+	}
+
+}
+ function verifyRadioAmount() {	 
 	    // Check to see if an amount is selected, set the amount value
 	    var ischecked=false;
 	    var amount=0;
