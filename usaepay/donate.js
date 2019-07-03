@@ -27,6 +27,10 @@ function addqty(field, qtyfield) {
  function postSubmission() {	 
 	 if (verifyAmount() == false) {
 		 return false;
+	 } else if (verifyCC() == false) {
+		 return false;
+	 } else if (verifyCVV() == false) {
+		 return false;
 	 } else if (verifyPhone() == false) {
 		 return false;
 	 } else if (verifyEmail() == false) {
@@ -96,6 +100,34 @@ function verifyAmount() {
 	        return false;
 	    }
 }
+ function verifyCC() {
+	 // Check to see if CVV number is entered
+	 if(document.getElementsByName("UMcard")[0].value =='') {
+	        alert("Enter a number for CC");
+	        return false;
+	 }
+	 
+	 var regexCVV = new RegExp("^[0-9]+$");
+	 var CVV = document.getElementsByName("UMcard")[0].value;
+	 if(!regexCVV.test(CVV)){
+		 alert("Enter a valid number for CC");
+		 return false;
+	 }
+ }
+ function verifyCVV() {
+	 // Check to see if CVV number is entered
+	 if(document.getElementsByName("UMcvv2")[0].value =='') {
+	        alert("Enter a number for CC CVV");
+	        return false;
+	 }
+	 
+	 var regexCVV = new RegExp("^[0-9]+$");
+	 var CVV = document.getElementsByName("UMcvv2")[0].value;
+	 if(!regexCVV.test(CVV)){
+		 alert("Enter a valid number for CC CVV");
+		 return false;
+	 }
+ }
  function collectPurpose() {
 	 var purpose_array = [];
 	 var purposes = document.getElementsByName('purpose');
