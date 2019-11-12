@@ -39,6 +39,13 @@ function postSubmission() {
 	collectPurpose();
 }
 
+function addDotToAmount() {
+	var amount =  document.getElementById("AmountId").value;
+	if (!(amount .includes('.'))) {
+		document.getElementById("AmountId").value = amount.concat('.00');
+	}
+}
+
 function verifyAmount() {
 	var isChecked = false;
 	var amount = 0;

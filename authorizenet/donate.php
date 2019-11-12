@@ -10,6 +10,9 @@ require_once 'config.php';
 </head>
 <body>
 <script src="donate.js"></script>
+<script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit"
+        async defer>
+</script>
 If you have received an honor on Shabbat and would like to donate to the <b>Young Sephardic Community Center</b>, you may do so by filling out the form below.<br>
 All donations are tax deductible and donors will receive a summary of donations at the end of the year.<br>
 You can also pay for high holiday tickets or sponsor Shabbat Kiddush through the form below.
@@ -25,7 +28,7 @@ You can also pay for high holiday tickets or sponsor Shabbat Kiddush through the
                     <div>
                         <table>
                             <tr>
-				<td colspan="2"><b><font size="2"color="#ff0000">* </font>Donation Amount:</b>&nbsp;<input type="text" name="UMamount" id="AmountId" value="0.00"></td>
+				<td colspan="2"><b><font size="2"color="#ff0000">* </font>Donation Amount:</b>&nbsp;<input type="text" name="UMamount" id="AmountId" value="0.00" onblur="addDotToAmount();"></td>
                             </tr>
                             <tr>
                                 <td colspan="2"><b>Donation Purpose:</b><br>
@@ -85,15 +88,27 @@ You can also pay for high holiday tickets or sponsor Shabbat Kiddush through the
                             </tr>
                             <tr>
                                 <td align="right"><font size="2"color="#ff0000">* </font>Name on Card:</td>
-                                <td><input type="text" name="UMname" size="25" value=""></td>
+                                <td><input type="text" name="firstName" size="20" value="" placeholder="firstName"><input type="text" name="lastName" size="20" value="" placeholder="lastName"></td>
                             </tr>
                             <tr>
-                                <td align="right"><font size="2"color="#ff0000">* </font>Card Billing Address:</td>
+                                <td align="right"><font size="2"color="#ff0000">* </font>Address:</td>
                                 <td><input type="text" name="UMstreet" size="25" value=""></td>
                             </tr>
                             <tr>
-                                <td align="right"><font size="2"color="#ff0000">* </font>Card Billing Zipcode:</td>
+                                <td align="right">City:</td>
+                                <td><input type="text" name="city" size="25" value=""></td>
+                            </tr>
+                            <tr>
+                                <td align="right">State:</td>
+                                <td><input type="text" name="state" size="2" value="CA" placeholder="CA"></td>
+                            </tr>
+                            <tr>
+                                <td align="right"><font size="2"color="#ff0000">* </font>Zip:</td>
                                 <td><input type="text" name="UMzip" size="10" value=""></td>
+                            </tr>
+                            <tr>
+                                <td align="right">Country:</td>
+                                <td><input type="text" name="country" size="3" value="USA" readonly="readonly"></td>
                             </tr>
                             <tr>
                                 <td align="right"><font size="2"color="#ff0000">* </font>Card Number:</td>
@@ -111,7 +126,7 @@ You can also pay for high holiday tickets or sponsor Shabbat Kiddush through the
                             </tr>
                             <tr>
                                 <td align="right"><font size="2"color="#ff0000">* </font>Phone Number:</td>
-                                <td><input type="text" name="UMbillphone" size="20" value=""></td>
+                                <td><input type="text" name="UMbillphone" size="20" value="" placeholder="123-456-7890"></td>
                             </tr>
                             <tr>
                                 <td align="right"><font size="2"color="#ff0000">* </font>Email Address:</td>
@@ -120,6 +135,14 @@ You can also pay for high holiday tickets or sponsor Shabbat Kiddush through the
                             <tr>
                                 <td colspan="2">&nbsp;&nbsp;&nbsp;</td>
                             </tr>
+                            <tr>
+								<td>
+									<input type="hidden" id="spGoogleCaptchaRes" name="spGoogleCaptchaRes" value="" required="required">
+								</td>
+    							<td>
+    								<div id="spGoogleCaptcha"></div>	
+    							</td>
+							</tr>
                             <tr>
                                 <td colspan="2">
                                     <p align="center">
@@ -134,10 +157,39 @@ You can also pay for high holiday tickets or sponsor Shabbat Kiddush through the
             </tr>
         </table>
     </form>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script type="text/javascript">
+    /** Recapta **/
+    function wpspfCheckGrecaptcha() {
+    	var spGoogleCaptchaRes = jQuery('#spGoogleCaptchaRes').val();
+    	if (spGoogleCaptchaRes == '') {
+    		return false;
+    	} else {
+    		return true;
+    	}
+    }
+    var verifyCallback = function(token) {
+//     	jQuery('#wpspf_submit_btn').show();
+    	jQuery('#spGoogleCaptchaRes').val(token);
+    };
+
+    var expiredCallback = function() {
+//     	jQuery('#wpspf_submit_btn').hide();
+    	var tokenBlank = '';
+    	jQuery('#spGoogleCaptchaRes').val(tokenBlank);
+    };
+
+    var captchaTheme = 'light';
+    var sitekey = '<?php echo $googleCaptcha_sitekey; ?>';
+    var onloadCallback = function() {
+    	grecaptcha.render('spGoogleCaptcha', {
+    		'sitekey' : sitekey,
+    		'callback' : verifyCallback,
+    		'expired-callback' : expiredCallback,
+    		'theme' : captchaTheme
+    	});
+    };
+    </script>
     <a target="_blank" href="https://www.ysccla.com/terms-of-service-refund-privacy-policy/">Refund Policy</a>
-
-
-
-
 </body>
 </html>

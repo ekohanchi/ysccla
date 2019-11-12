@@ -1,27 +1,21 @@
 <?php
-$MERCHANT_LOGIN_ID = "4v67QKpXzeA";
-$MERCHANT_TRANSACTION_KEY = "673G48xK7yg4HL5Y";
-
 $ENV = SANDBOX;
-//$ENV = PRODUCTION;
+$MERCHANT_LOGIN_ID = "";
+$MERCHANT_TRANSACTION_KEY = "";
 
-// Product Details
-$itemName = "Demo Product";
-$itemNumber = "PN12345";
-//$itemPrice = 25;
-//$donationAmount = 25;
+//$ENV = PRODUCTION;
+// $MERCHANT_LOGIN_ID = "";
+// $MERCHANT_TRANSACTION_KEY = "";
+
+$googleCaptcha_sitekey = "";
+$googleCaptcha_secretkey = "";
+
 $currency = "USD";  
 
 // Authorize.Net API configuration
 define('ANET_API_LOGIN_ID', $MERCHANT_LOGIN_ID);
 define('ANET_TRANSACTION_KEY', $MERCHANT_TRANSACTION_KEY);
+
 $ANET_ENV = $ENV; 
 
-
-// class SampleCodeConstants
-// {
-//     //merchant credentials
-//     const MERCHANT_LOGIN_ID = "4v67QKpXzeA";
-//     const MERCHANT_TRANSACTION_KEY = "673G48xK7yg4HL5Y";
-// }
 ?>
