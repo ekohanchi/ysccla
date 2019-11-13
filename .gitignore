@@ -12,4 +12,7 @@
 
 # OSX
 **/.DS_Store
-~               
+
+# Special Config Files
+authorizenet/config.php
+               

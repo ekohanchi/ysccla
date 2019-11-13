@@ -56,9 +56,9 @@ You can also pay for high holiday tickets or sponsor Shabbat Kiddush through the
                             </tr>
                             <tr>
                                 <td colspan="2"><b>General</b><br>
-                                This donation is In Honor of:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" name="donationfor"><br>
-                                This donation is In Memory of:&nbsp;<input type="text" name="donationfor"><br>
-                                Comments:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<textarea name="comments"> </textarea></td>
+                                This donation is In Honor of:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" name="donationforHonor"><br>
+                                This donation is In Memory of:&nbsp;<input type="text" name="donationforMemory"><br>
+                                Comments: <textarea name="comments" maxlength="255"></textarea></td>
                             </tr>
                             <tr>
                                 <td colspan="2">&nbsp;&nbsp;&nbsp;</td>
