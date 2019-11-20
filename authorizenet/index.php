@@ -7,12 +7,21 @@ require_once 'config.php';
 <head>
 <meta charset="UTF-8">
 <title>YSCC Donation</title>
+<style>
+.center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+</style>
 </head>
 <body>
 <script src="donate.js"></script>
 <script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit"
         async defer>
 </script>
+<a href="https://www.ysccla.com/"><img alt="YSCC" src="https://www.ysccla.com/wp-content/uploads/2015/04/logo5.png" class="center"></a>
+<br>
 If you have received an honor on Shabbat and would like to donate to the <b>Young Sephardic Community Center</b>, you may do so by filling out the form below.<br>
 All donations are tax deductible and donors will receive a summary of donations at the end of the year.<br>
 You can also pay for high holiday tickets or sponsor Shabbat Kiddush through the form below.
