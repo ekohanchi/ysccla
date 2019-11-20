@@ -14,12 +14,19 @@ require_once 'config.php';
   margin-right: auto;
 }
 </style>
+	<link rel='stylesheet' id='dashicons-css'  href='https://www.ysccla.com/wp-includes/css/dashicons.min.css?ver=5.2.4' type='text/css' media='all' />
+<link rel='stylesheet' id='admin-bar-css'  href='https://www.ysccla.com/wp-includes/css/admin-bar.min.css?ver=5.2.4' type='text/css' media='all' />
+<link rel='stylesheet' id='wp-block-library-css'  href='https://www.ysccla.com/wp-includes/css/dist/block-library/style.min.css?ver=5.2.4' type='text/css' media='all' />
+<link rel='stylesheet' id='zerif_font-css'  href='//fonts.googleapis.com/css?family=Lato%3A300%2C400%2C700%2C400italic%7CMontserrat%3A400%2C700%7CHomemade+Apple&#038;subset=latin%2Clatin-ext' type='text/css' media='all' />
+<link rel='stylesheet' id='zerif_font_all-css'  href='//fonts.googleapis.com/css?family=Open+Sans%3A300%2C300italic%2C400%2C400italic%2C600%2C600italic%2C700%2C700italic%2C800%2C800italic&#038;subset=latin&#038;ver=5.2.4' type='text/css' media='all' />
+<link rel='stylesheet' id='zerif_bootstrap_style-css'  href='https://www.ysccla.com/wp-content/themes/zerif-lite/css/bootstrap.css?ver=5.2.4' type='text/css' media='all' />
+<link rel='stylesheet' id='zerif_fontawesome-css'  href='https://www.ysccla.com/wp-content/themes/zerif-lite/css/font-awesome.min.css?ver=v1' type='text/css' media='all' />
+<link rel='stylesheet' id='zerif_style-css'  href='https://www.ysccla.com/wp-content/themes/zerif-lite/style.css?ver=1.8.5.49' type='text/css' media='all' />
+
 </head>
 <body>
 <script src="donate.js"></script>
-<script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit"
-        async defer>
-</script>
+<script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit" async defer></script>
 <a href="https://www.ysccla.com/"><img alt="YSCC" src="https://www.ysccla.com/wp-content/uploads/2015/04/logo5.png" class="center"></a>
 <br>
 If you have received an honor on Shabbat and would like to donate to the <b>Young Sephardic Community Center</b>, you may do so by filling out the form below.<br>
@@ -31,7 +38,7 @@ You can also pay for high holiday tickets or sponsor Shabbat Kiddush through the
         <input type="hidden" name="UMinvoice">
         <input type="hidden" name="UMamount">
         <input type="hidden" name="purposeCollection">
-        <table style="width: 100%;">
+        <table style="width: 100%; margin-left:  25px;">
             <tr>
                 <td>
                     <div>

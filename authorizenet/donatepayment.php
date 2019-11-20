@@ -1,3 +1,12 @@
+<head>
+<style>
+.center {
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+}
+</style>
+</head>
 <?php
 // Include Authorize.Net PHP sdk
 // require 'anet_sdk_php/autoload.php';
@@ -17,11 +26,11 @@ $responseArr = array(
     4 => 'Held for Review'
 );
 
-//check for google captcha
-if(verify_google_captcha($_POST['spGoogleCaptchaRes'], $_POST['g-recaptcha-response'])==true) {
-// Check whether card information is not empty
+// check for google captcha
+if (verify_google_captcha($_POST['spGoogleCaptchaRes'], $_POST['g-recaptcha-response']) == true) {
+    // Check whether card information is not empty
     if (! empty($_POST['card_number']) && ! empty($_POST['card_exp_month']) && ! empty($_POST['card_exp_year']) && ! empty($_POST['card_cvc'])) {
-    
+
         // Retrieve card and user info from the submitted form data
         $donationAmount = $_POST['UMamount'];
         $donationItems = $_POST['purposeCollection'];
@@ -46,39 +55,40 @@ if(verify_google_captcha($_POST['spGoogleCaptchaRes'], $_POST['g-recaptcha-respo
         $card_exp_year = $_POST['card_exp_year'];
         $card_exp_year_month = $card_exp_year . '-' . $card_exp_month;
         $card_cvc = $_POST['card_cvc'];
-        
+
         // Shorten value for description if string length is >255
         if (strlen($donationItems) > 255) {
             $donationItems = substr($donationItems, 0, 251) . '...';
         }
-    
+
         // Set the transaction's reference ID
         $refID = 'REF' . time();
-        
+
         date_default_timezone_set('America/Los_Angeles');
-        $invoiceNumber = date('Ymd-his', time());;
-    
+        $invoiceNumber = date('Ymd-his', time());
+        ;
+
         // Create a merchantAuthenticationType object with authentication details
         // retrieved from the config file
         $merchantAuthentication = new AnetAPI\MerchantAuthenticationType();
         $merchantAuthentication->setName(ANET_API_LOGIN_ID);
         $merchantAuthentication->setTransactionKey(ANET_TRANSACTION_KEY);
-    
+
         // Create the payment data for a credit card
         $creditCard = new AnetAPI\CreditCardType();
         $creditCard->setCardNumber($card_number);
         $creditCard->setExpirationDate($card_exp_year_month);
         $creditCard->setCardCode($card_cvc);
-    
+
         // Add the payment data to a paymentType object
         $paymentOne = new AnetAPI\PaymentType();
         $paymentOne->setCreditCard($creditCard);
-    
+
         // Create order information
         $order = new AnetAPI\OrderType();
         $order->setInvoiceNumber($invoiceNumber);
         $order->setDescription($donationItems);
-        
+
         // Set the customer's Bill To address
         $customerAddress = new AnetAPI\CustomerAddressType();
         $customerAddress->setFirstName($firstName);
@@ -89,42 +99,42 @@ if(verify_google_captcha($_POST['spGoogleCaptchaRes'], $_POST['g-recaptcha-respo
         $customerAddress->setZip($zip);
         $customerAddress->setCountry($country);
         $customerAddress->setPhoneNumber($phoneNumber);
-    
+
         // Set the customer's identifying information
         $customerData = new AnetAPI\CustomerDataType();
         $customerData->setType("individual");
         $customerData->setEmail($email);
-        
+
         // Add some merchant defined fields. These fields won't be stored with the transaction,
         // but will be echoed back in the response.
         $merchantDefinedField1 = new AnetAPI\UserFieldType();
         $merchantDefinedField1->setName("Quantity - Partner Extra Seats - High Holidays");
         $merchantDefinedField1->setValue($hhpes_qty);
-        
+
         $merchantDefinedField2 = new AnetAPI\UserFieldType();
         $merchantDefinedField2->setName("Quantity - Non Members-High Holiday Seats for both Rosh Hashana and Yom Kippur");
         $merchantDefinedField2->setValue($hhry_qty);
-        
+
         $merchantDefinedField3 = new AnetAPI\UserFieldType();
         $merchantDefinedField3->setName("Quantity - Non Members-High Holiday Seats for Rosh Hashana");
         $merchantDefinedField3->setValue($hhr_qty);
-        
+
         $merchantDefinedField4 = new AnetAPI\UserFieldType();
         $merchantDefinedField4->setName("Quantity - Non Members-High Holiday Seats for Yom Kippur");
         $merchantDefinedField4->setValue($hhy_qty);
-        
-        $merchantDefinedField5= new AnetAPI\UserFieldType();
+
+        $merchantDefinedField5 = new AnetAPI\UserFieldType();
         $merchantDefinedField5->setName("Donation For Honor");
         $merchantDefinedField5->setValue($donationForHonor);
-        
-        $merchantDefinedField6= new AnetAPI\UserFieldType();
+
+        $merchantDefinedField6 = new AnetAPI\UserFieldType();
         $merchantDefinedField6->setName("Donation For Memory");
         $merchantDefinedField6->setValue($donationForMemory);
-        
-        $merchantDefinedField7= new AnetAPI\UserFieldType();
+
+        $merchantDefinedField7 = new AnetAPI\UserFieldType();
         $merchantDefinedField7->setName("Comments");
         $merchantDefinedField7->setValue($comments);
-    
+
         // Create a transaction
         $transactionRequestType = new AnetAPI\TransactionRequestType();
         $transactionRequestType->setTransactionType("authCaptureTransaction");
@@ -146,14 +156,14 @@ if(verify_google_captcha($_POST['spGoogleCaptchaRes'], $_POST['g-recaptcha-respo
         $request->setTransactionRequest($transactionRequestType);
         $controller = new AnetController\CreateTransactionController($request);
         $response = $controller->executeWithApiResponse(constant("\\net\authorize\api\constants\ANetEnvironment::$ANET_ENV"));
-    
+
         if ($response != null) {
             // Check to see if the API request was successfully received and acted upon
             if ($response->getMessages()->getResultCode() == "Ok") {
                 // Since the API request was successful, look for a transaction response
                 // and parse it to display the results of authorizing the card
                 $tresponse = $response->getTransactionResponse();
-    
+
                 if ($tresponse != null && $tresponse->getMessages() != null) {
                     // Transaction info
                     $transaction_id = $tresponse->getTransId();
@@ -162,9 +172,9 @@ if(verify_google_captcha($_POST['spGoogleCaptchaRes'], $_POST['g-recaptcha-respo
                     $auth_code = $tresponse->getAuthCode();
                     $message_code = $tresponse->getMessages()[0]->getCode();
                     $message_desc = $tresponse->getMessages()[0]->getDescription();
-    
+
                     $paymentID = $refID;
-    
+
                     $ordStatus = 'success';
                     $statusMsg = 'Your Donation Payment has been Successful!';
                 } else {
@@ -179,7 +189,7 @@ if(verify_google_captcha($_POST['spGoogleCaptchaRes'], $_POST['g-recaptcha-respo
             } else {
                 $error = "Transaction Failed! \n";
                 $tresponse = $response->getTransactionResponse();
-    
+
                 if ($tresponse != null && $tresponse->getErrors() != null) {
                     $error .= " Error Code  : " . $tresponse->getErrors()[0]->getErrorCode() . "<br/>";
                     $error .= " Error Message : " . $tresponse->getErrors()[0]->getErrorText() . "<br/>";
@@ -199,19 +209,23 @@ if(verify_google_captcha($_POST['spGoogleCaptchaRes'], $_POST['g-recaptcha-respo
     echo 'Invalid captcha. Please try again.';
 }
 
-function verify_google_captcha($captchaRes, $grecaptchaRes) {
+function verify_google_captcha($captchaRes, $grecaptchaRes)
+{
     $result = false;
-    if(isset($_POST['spGoogleCaptchaRes']) && isset($_POST['g-recaptcha-response']) && $_POST['spGoogleCaptchaRes'] == $_POST['g-recaptcha-response']) {
-       $result = true;
+    if (isset($_POST['spGoogleCaptchaRes']) && isset($_POST['g-recaptcha-response']) && $_POST['spGoogleCaptchaRes'] == $_POST['g-recaptcha-response']) {
+        $result = true;
     }
     return $result;
 }
-       
+
 ?>
 
 <div class="status">
+	<a href="https://www.ysccla.com/"><img alt="YSCC"
+		src="https://www.ysccla.com/wp-content/uploads/2015/04/logo5.png"
+		class="center"></a>
 	<?php if(!empty($paymentID)){ ?>
-		<h1 class="<?php echo $ordStatus; ?>"><?php echo $statusMsg; ?></h1>
+	<h1 class="<?php echo $ordStatus; ?>"><?php echo $statusMsg; ?></h1>
 
 	<h4>Payment Information</h4>
 	<p>
