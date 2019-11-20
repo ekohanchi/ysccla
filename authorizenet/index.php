@@ -7,31 +7,39 @@ require_once 'config.php';
 <head>
 <meta charset="UTF-8">
 <title>YSCC Donation</title>
+ <!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script> 
+
+<!-- Custom CSS -->
+<link rel="stylesheet" href="css/styl.css">
 </head>
 <body>
 <script src="donate.js"></script>
-<script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit"
-        async defer>
-</script>
-If you have received an honor on Shabbat and would like to donate to the <b>Young Sephardic Community Center</b>, you may do so by filling out the form below.<br>
-All donations are tax deductible and donors will receive a summary of donations at the end of the year.<br>
-You can also pay for high holiday tickets or sponsor Shabbat Kiddush through the form below.
-    <!--form name="epayform" action="https://www.usaepay.com/gate.php" method="POST" onSubmit="return postSubmission();">
-        <input type="hidden" name="UMkey" value="RY3C24gRz1mUp9gAnFbH11Ae0g47dfeX"-->
+<script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit" async defer></script>
+
+<div class="container">
+<div class="panel-heading">
+    <div class="panel-title">
+    If you have received an honor on Shabbat and would like to donate to the <b>Young Sephardic Community Center</b>, you may do so by filling out the form below.<br>
+    All donations are tax deductible and donors will receive a summary of donations at the end of the year.<br>
+    You can also pay for high holiday tickets or sponsor Shabbat Kiddush through the form below.
+    </div>
+</div>
     <form name="epayform" action="donatepayment.php" method="POST" onSubmit="return postSubmission();">
         <input type="hidden" name="UMinvoice">
         <input type="hidden" name="UMamount">
         <input type="hidden" name="purposeCollection">
-        <table style="width: 100%;">
-            <tr>
-                <td>
+
                     <div>
-                        <table>
-                            <tr>
-				<td colspan="2"><b><font size="2"color="#ff0000">* </font>Donation Amount:</b>&nbsp;<input type="text" name="UMamount" id="AmountId" value="0.00" onblur="addDotToAmount();"></td>
-                            </tr>
-                            <tr>
-                                <td colspan="2"><b>Donation Purpose:</b><br>
+				<b><font size="2"color="#ff0000">* </font>Donation Amount:</b>&nbsp;<input type="text" name="UMamount" id="AmountId" value="0.00" onblur="addDotToAmount();">
+				<br>
+                               <b>Donation Purpose:</b><br>
                                 <input type="checkbox" name="purpose" value="Pay My contribution ( bought a mitzvah)"> Pay My contribution ( bought a mitzvah)<br />
                                 <input type="checkbox" name="purpose" value="$1360 a year - Partnership for family"> $1360 a year - Partnership for family<br />
                                 <input type="checkbox" name="purpose" value="$800 a year - Newly wed"> $800 a year - Newly wed <br />
@@ -48,26 +56,19 @@ You can also pay for high holiday tickets or sponsor Shabbat Kiddush through the
                                 <input type="checkbox" name="purpose" value="Fund - Torah Learning"> Fund &#8211; Torah Learning<br />
                                 <input type="checkbox" name="purpose" value="Event"> Event (Please specify event in comment box)<br />
                                 <input type="checkbox" name="purpose" value="Associate YSCC"> Associate YSCC<br />
-                                <input type="checkbox" name="purpose" value="Other"> Other<br /></td>
-                            </tr>
-                            <tr>
-                                <td colspan="2"><b>Anonymous</b><br>
-                                <input type="checkbox" name="anonymous"> I prefer to make this donation anonymously</td>
-                            </tr>
-                            <tr>
-                                <td colspan="2"><b>General</b><br>
+                                <input type="checkbox" name="purpose" value="Other"> Other<br />
+                           
+                               <b>Anonymous</b><br>
+                                <input type="checkbox" name="anonymous"> I prefer to make this donation anonymously
+                                <b>General</b><br>
                                 This donation is In Honor of:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" name="donationforHonor"><br>
                                 This donation is In Memory of:&nbsp;<input type="text" name="donationforMemory"><br>
-                                Comments: <textarea name="comments" maxlength="255"></textarea></td>
-                            </tr>
-                            <tr>
-                                <td colspan="2">&nbsp;&nbsp;&nbsp;</td>
-                            </tr>
-                            <tr>
-                                <td colspan="2"><b>Secure Payment Form</b></td>
-                            </tr>
-                            <tr>
-                                <td colspan="2"><p align="center">
+                                Comments: <textarea name="comments" maxlength="255"></textarea>
+
+                               &nbsp;&nbsp;&nbsp;
+                            <b>Secure Payment Form</b>
+                            
+                                <p align="center">
                                         <img border="0" src="https://secure.usaepay.com/images/visa.gif" width="44" height="28" hspace="3"> <img border="0" src="https://secure.usaepay.com/images/mastercard.gif" width="44" height="28" hspace="3"> <img border="0" src="https://secure.usaepay.com/images/amex.gif" width="44" height="28" hspace="3"> <img border="0" src="https://secure.usaepay.com/images/discover.gif" width="44" height="28" hspace="3"></td>
                             </tr>
                             <tr>
@@ -155,8 +156,8 @@ You can also pay for high holiday tickets or sponsor Shabbat Kiddush through the
                     </div>
                     
             </tr>
-        </table>
     </form>
+    </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script type="text/javascript">
     /** Recapta **/
