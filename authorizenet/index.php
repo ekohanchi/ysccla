@@ -152,12 +152,12 @@ You can also pay for high holiday tickets or sponsor Shabbat Kiddush through the
                                 <td colspan="2">&nbsp;&nbsp;&nbsp;</td>
                             </tr>
                             <tr>
-								<td>
-									<input type="hidden" id="spGoogleCaptchaRes" name="spGoogleCaptchaRes" value="" required="required">
-								</td>
-    							<td>
-    								<div id="spGoogleCaptcha"></div>	
-    							</td>
+ 								<td>
+ 									<input type="hidden" id="spGoogleCaptchaRes" name="spGoogleCaptchaRes" value="" required="required">
+ 								</td>
+     							<td>
+     								<div id="spGoogleCaptcha"></div>
+     							</td>
 							</tr>
                             <tr>
                                 <td colspan="2">
@@ -185,12 +185,10 @@ You can also pay for high holiday tickets or sponsor Shabbat Kiddush through the
     	}
     }
     var verifyCallback = function(token) {
-//     	jQuery('#wpspf_submit_btn').show();
     	jQuery('#spGoogleCaptchaRes').val(token);
     };
 
     var expiredCallback = function() {
-//     	jQuery('#wpspf_submit_btn').hide();
     	var tokenBlank = '';
     	jQuery('#spGoogleCaptchaRes').val(tokenBlank);
     };
