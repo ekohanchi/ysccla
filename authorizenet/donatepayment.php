@@ -27,7 +27,7 @@ $responseArr = array(
 );
 
 // check for google captcha
-if (verify_google_captcha($_POST['spGoogleCaptchaRes'], $_POST['g-recaptcha-response']) == true) {
+if (verify_google_captcha($_POST['spGoogleCaptchaRes'], $_POST['g-recaptcha-response'], $googleCaptcha_secretkey) == true) {
     // Check whether card information is not empty
     if (! empty($_POST['card_number']) && ! empty($_POST['card_exp_month']) && ! empty($_POST['card_exp_year']) && ! empty($_POST['card_cvc'])) {
 
@@ -209,13 +209,34 @@ if (verify_google_captcha($_POST['spGoogleCaptchaRes'], $_POST['g-recaptcha-resp
     echo 'Invalid captcha. Please try again.';
 }
 
-function verify_google_captcha($captchaRes, $grecaptchaRes)
+function verify_google_captcha($captchaRes, $grecaptchaRes, $secretKey)
 {
-    $result = false;
-    if (isset($_POST['spGoogleCaptchaRes']) && isset($_POST['g-recaptcha-response']) && $_POST['spGoogleCaptchaRes'] == $_POST['g-recaptcha-response']) {
-        $result = true;
+    if (isset($_POST['spGoogleCaptchaRes']) && isset($_POST['g-recaptcha-response'])) {
+        $ip = $_SERVER['REMOTE_ADDR'];
+        
+        // post request to server
+        $url = 'https://www.google.com/recaptcha/api/siteverify';
+        $data = array(
+            'secret' => $secretKey,
+            'response' => $grecaptchaRes,
+            'remoteip' => $ip);
+        $options = array( 'http' =>
+            array(
+                'method'  => 'POST',
+                'header'  => 'Content-type: application/x-www-form-urlencoded',
+                'content' => http_build_query($data)
+            )
+        );
+        $context  = stream_context_create($options);
+        $response = file_get_contents($url, false, $context);
+        $result = json_decode($response);
+        
+        return $result->success;
+    } else {
+        return false;
     }
-    return $result;
+    
+
 }
 
 ?>
