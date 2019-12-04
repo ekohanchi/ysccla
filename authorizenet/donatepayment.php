@@ -32,6 +32,7 @@ if (verify_google_captcha($_POST['spGoogleCaptchaRes'], $_POST['g-recaptcha-resp
     if (! empty($_POST['card_number']) && ! empty($_POST['card_exp_month']) && ! empty($_POST['card_exp_year']) && ! empty($_POST['card_cvc'])) {
 
         // Retrieve card and user info from the submitted form data
+        $recurringSet = ($_POST['frequency'] == "Recurring") ? true : false;
         $donationAmount = $_POST['UMamount'];
         $donationItems = $_POST['purposeCollection'];
         $hhpes_qty = $_POST['hhpes_qty'];
@@ -73,117 +74,198 @@ if (verify_google_captcha($_POST['spGoogleCaptchaRes'], $_POST['g-recaptcha-resp
         $merchantAuthentication = new AnetAPI\MerchantAuthenticationType();
         $merchantAuthentication->setName(ANET_API_LOGIN_ID);
         $merchantAuthentication->setTransactionKey(ANET_TRANSACTION_KEY);
+        
+        if ($recurringSet) {
+            $numOfMonths = $_POST['recurringMonths'];
+            
+            // Subscription Type Info
+            $subscription = new AnetAPI\ARBSubscriptionType();
+            $subscription->setName("Monthly Recurring Donation");
+            
+            $interval = new AnetAPI\PaymentScheduleType\IntervalAType();
+            $interval->setLength("1");
+            $interval->setUnit("months");
+            
+            $recurringStartDate = date('Y-m-d', time());
+            
+            $paymentSchedule = new AnetAPI\PaymentScheduleType();
+            $paymentSchedule->setInterval($interval);
+            $paymentSchedule->setStartDate(new DateTime($recurringStartDate));
+            $paymentSchedule->setTotalOccurrences($numOfMonths);
+            $paymentSchedule->setTrialOccurrences("0");
+            
+            $subscription->setPaymentSchedule($paymentSchedule);
+            $subscription->setAmount($donationAmount);
+            $subscription->setTrialAmount("0.00");
+            
+            // Create the payment data for a credit card
+            $creditCard = new AnetAPI\CreditCardType();
+            $creditCard->setCardNumber($card_number);
+            $creditCard->setExpirationDate($card_exp_year_month);
+            $creditCard->setCardCode($card_cvc);
+            
+            $payment = new AnetAPI\PaymentType();
+            $payment->setCreditCard($creditCard);
+            $subscription->setPayment($payment);
+            
+            // Create order information
+            $order = new AnetAPI\OrderType();
+            $order->setInvoiceNumber($invoiceNumber);
+            $order->setDescription($donationItems);
+            $subscription->setOrder($order);
+            
+            // Set the customer's identifying information
+            $customer = new AnetAPI\CustomerType();
+            $customer->setEmail($email);
+            $customer->setPhoneNumber($phoneNumber);
+            $subscription->setCustomer($customer);
+            
+            $billTo = new AnetAPI\NameAndAddressType();
+            $billTo->setFirstName($firstName);
+            $billTo->setLastName($lastName);
+            $billTo->setAddress($address);
+            $billTo->setCity($city);
+            $billTo->setState($state);
+            $billTo->setZip($zip);
+            $billTo->setCountry($country);
+            $subscription->setBillTo($billTo);
+            
+            $request = new AnetAPI\ARBCreateSubscriptionRequest();
+            $request->setmerchantAuthentication($merchantAuthentication);
+            $request->setRefId($refId);
+            $request->setSubscription($subscription);
+            $controller = new AnetController\ARBCreateSubscriptionController($request);
+        } else {
+            // Create the payment data for a credit card
+            $creditCard = new AnetAPI\CreditCardType();
+            $creditCard->setCardNumber($card_number);
+            $creditCard->setExpirationDate($card_exp_year_month);
+            $creditCard->setCardCode($card_cvc);
+            
+            // Add the payment data to a paymentType object
+            $paymentOne = new AnetAPI\PaymentType();
+            $paymentOne->setCreditCard($creditCard);
+            
+            // Create order information
+            $order = new AnetAPI\OrderType();
+            $order->setInvoiceNumber($invoiceNumber);
+            $order->setDescription($donationItems);
+            
+            // Set the customer's Bill To address
+            $customerAddress = new AnetAPI\CustomerAddressType();
+            $customerAddress->setFirstName($firstName);
+            $customerAddress->setLastName($lastName);
+            $customerAddress->setAddress($address);
+            $customerAddress->setCity($city);
+            $customerAddress->setState($state);
+            $customerAddress->setZip($zip);
+            $customerAddress->setCountry($country);
+            $customerAddress->setPhoneNumber($phoneNumber);
+            
+            // Set the customer's identifying information
+            $customerData = new AnetAPI\CustomerDataType();
+            $customerData->setType("individual");
+            $customerData->setEmail($email);
+            
+            // Add some merchant defined fields. These fields won't be stored with the transaction,
+            // but will be echoed back in the response.
+            $merchantDefinedField1 = new AnetAPI\UserFieldType();
+            $merchantDefinedField1->setName("Quantity - Partner Extra Seats - High Holidays");
+            $merchantDefinedField1->setValue($hhpes_qty);
+            
+            $merchantDefinedField2 = new AnetAPI\UserFieldType();
+            $merchantDefinedField2->setName("Quantity - Non Members-High Holiday Seats for both Rosh Hashana and Yom Kippur");
+            $merchantDefinedField2->setValue($hhry_qty);
+            
+            $merchantDefinedField3 = new AnetAPI\UserFieldType();
+            $merchantDefinedField3->setName("Quantity - Non Members-High Holiday Seats for Rosh Hashana");
+            $merchantDefinedField3->setValue($hhr_qty);
+            
+            $merchantDefinedField4 = new AnetAPI\UserFieldType();
+            $merchantDefinedField4->setName("Quantity - Non Members-High Holiday Seats for Yom Kippur");
+            $merchantDefinedField4->setValue($hhy_qty);
+            
+            $merchantDefinedField5 = new AnetAPI\UserFieldType();
+            $merchantDefinedField5->setName("Donation For Honor");
+            $merchantDefinedField5->setValue($donationForHonor);
+            
+            $merchantDefinedField6 = new AnetAPI\UserFieldType();
+            $merchantDefinedField6->setName("Donation For Memory");
+            $merchantDefinedField6->setValue($donationForMemory);
+            
+            $merchantDefinedField7 = new AnetAPI\UserFieldType();
+            $merchantDefinedField7->setName("Comments");
+            $merchantDefinedField7->setValue($comments);
+            
+            // Create a transaction
+            $transactionRequestType = new AnetAPI\TransactionRequestType();
+            $transactionRequestType->setTransactionType("authCaptureTransaction");
+            $transactionRequestType->setAmount($donationAmount);
+            $transactionRequestType->setOrder($order);
+            $transactionRequestType->setPayment($paymentOne);
+            $transactionRequestType->setCustomer($customerData);
+            $transactionRequestType->setBillTo($customerAddress);
+            $transactionRequestType->addToUserFields($merchantDefinedField1);
+            $transactionRequestType->addToUserFields($merchantDefinedField2);
+            $transactionRequestType->addToUserFields($merchantDefinedField3);
+            $transactionRequestType->addToUserFields($merchantDefinedField4);
+            $transactionRequestType->addToUserFields($merchantDefinedField5);
+            $transactionRequestType->addToUserFields($merchantDefinedField6);
+            $transactionRequestType->addToUserFields($merchantDefinedField7);
+            $request = new AnetAPI\CreateTransactionRequest();
+            $request->setMerchantAuthentication($merchantAuthentication);
+            $request->setRefId($refID);
+            $request->setTransactionRequest($transactionRequestType);
+            $controller = new AnetController\CreateTransactionController($request);
+        }
 
-        // Create the payment data for a credit card
-        $creditCard = new AnetAPI\CreditCardType();
-        $creditCard->setCardNumber($card_number);
-        $creditCard->setExpirationDate($card_exp_year_month);
-        $creditCard->setCardCode($card_cvc);
-
-        // Add the payment data to a paymentType object
-        $paymentOne = new AnetAPI\PaymentType();
-        $paymentOne->setCreditCard($creditCard);
-
-        // Create order information
-        $order = new AnetAPI\OrderType();
-        $order->setInvoiceNumber($invoiceNumber);
-        $order->setDescription($donationItems);
-
-        // Set the customer's Bill To address
-        $customerAddress = new AnetAPI\CustomerAddressType();
-        $customerAddress->setFirstName($firstName);
-        $customerAddress->setLastName($lastName);
-        $customerAddress->setAddress($address);
-        $customerAddress->setCity($city);
-        $customerAddress->setState($state);
-        $customerAddress->setZip($zip);
-        $customerAddress->setCountry($country);
-        $customerAddress->setPhoneNumber($phoneNumber);
-
-        // Set the customer's identifying information
-        $customerData = new AnetAPI\CustomerDataType();
-        $customerData->setType("individual");
-        $customerData->setEmail($email);
-
-        // Add some merchant defined fields. These fields won't be stored with the transaction,
-        // but will be echoed back in the response.
-        $merchantDefinedField1 = new AnetAPI\UserFieldType();
-        $merchantDefinedField1->setName("Quantity - Partner Extra Seats - High Holidays");
-        $merchantDefinedField1->setValue($hhpes_qty);
-
-        $merchantDefinedField2 = new AnetAPI\UserFieldType();
-        $merchantDefinedField2->setName("Quantity - Non Members-High Holiday Seats for both Rosh Hashana and Yom Kippur");
-        $merchantDefinedField2->setValue($hhry_qty);
-
-        $merchantDefinedField3 = new AnetAPI\UserFieldType();
-        $merchantDefinedField3->setName("Quantity - Non Members-High Holiday Seats for Rosh Hashana");
-        $merchantDefinedField3->setValue($hhr_qty);
-
-        $merchantDefinedField4 = new AnetAPI\UserFieldType();
-        $merchantDefinedField4->setName("Quantity - Non Members-High Holiday Seats for Yom Kippur");
-        $merchantDefinedField4->setValue($hhy_qty);
-
-        $merchantDefinedField5 = new AnetAPI\UserFieldType();
-        $merchantDefinedField5->setName("Donation For Honor");
-        $merchantDefinedField5->setValue($donationForHonor);
-
-        $merchantDefinedField6 = new AnetAPI\UserFieldType();
-        $merchantDefinedField6->setName("Donation For Memory");
-        $merchantDefinedField6->setValue($donationForMemory);
-
-        $merchantDefinedField7 = new AnetAPI\UserFieldType();
-        $merchantDefinedField7->setName("Comments");
-        $merchantDefinedField7->setValue($comments);
-
-        // Create a transaction
-        $transactionRequestType = new AnetAPI\TransactionRequestType();
-        $transactionRequestType->setTransactionType("authCaptureTransaction");
-        $transactionRequestType->setAmount($donationAmount);
-        $transactionRequestType->setOrder($order);
-        $transactionRequestType->setPayment($paymentOne);
-        $transactionRequestType->setCustomer($customerData);
-        $transactionRequestType->setBillTo($customerAddress);
-        $transactionRequestType->addToUserFields($merchantDefinedField1);
-        $transactionRequestType->addToUserFields($merchantDefinedField2);
-        $transactionRequestType->addToUserFields($merchantDefinedField3);
-        $transactionRequestType->addToUserFields($merchantDefinedField4);
-        $transactionRequestType->addToUserFields($merchantDefinedField5);
-        $transactionRequestType->addToUserFields($merchantDefinedField6);
-        $transactionRequestType->addToUserFields($merchantDefinedField7);
-        $request = new AnetAPI\CreateTransactionRequest();
-        $request->setMerchantAuthentication($merchantAuthentication);
-        $request->setRefId($refID);
-        $request->setTransactionRequest($transactionRequestType);
-        $controller = new AnetController\CreateTransactionController($request);
+//         echo "Request: " .json_encode($request);
+//         echo "<br><br>";
         $response = $controller->executeWithApiResponse(constant("\\net\authorize\api\constants\ANetEnvironment::$ANET_ENV"));
 
         if ($response != null) {
+//             echo "Response: " .json_encode($response);
+//             echo "<br>"; 
             // Check to see if the API request was successfully received and acted upon
             if ($response->getMessages()->getResultCode() == "Ok") {
-                // Since the API request was successful, look for a transaction response
-                // and parse it to display the results of authorizing the card
-                $tresponse = $response->getTransactionResponse();
-
-                if ($tresponse != null && $tresponse->getMessages() != null) {
-                    // Transaction info
-                    $transaction_id = $tresponse->getTransId();
-                    $payment_status = $response->getMessages()->getResultCode();
-                    $payment_response = $tresponse->getResponseCode();
-                    $auth_code = $tresponse->getAuthCode();
-                    $message_code = $tresponse->getMessages()[0]->getCode();
-                    $message_desc = $tresponse->getMessages()[0]->getDescription();
-
-                    $paymentID = $refID;
-
-                    $ordStatus = 'success';
-                    $statusMsg = 'Your Donation Payment has been Successful!';
-                } else {
-                    $error = "Transaction Failed! \n";
-                    if ($tresponse->getErrors() != null) {
-                        $error .= " Error Code  : " . $tresponse->getErrors()[0]->getErrorCode() . "<br/>";
-                        $error .= " Error Message : " . $tresponse->getErrors()[0]->getErrorText() . "<br/>";
+                
+                if ($recurringSet) {
+                    // Since the API request was successful, look for a subscriptionId
+                    $subscriptionId = $response->getSubscriptionId();
+                    if ($subscriptionId != null) {
+                        $paymentID = $refID;
+                        $ordStatus = 'success';
+                        $statusMsg = 'Your Recurring Donation Payment has been Successful!';
+                    } else {
+                        $error = "Transaction Failed! \n";
+                        $statusMsg = $error;
                     }
-                    $statusMsg = $error;
+                } else {
+                    // Since the API request was successful, look for a transaction response
+                    // and parse it to display the results of authorizing the card
+                    $tresponse = $response->getTransactionResponse();
+                    
+                    if ($tresponse != null && $tresponse->getMessages() != null) {
+                        // Transaction info
+                        $transaction_id = $tresponse->getTransId();
+                        $payment_status = $response->getMessages()->getResultCode();
+                        $payment_response = $tresponse->getResponseCode();
+                        $auth_code = $tresponse->getAuthCode();
+                        $message_code = $tresponse->getMessages()[0]->getCode();
+                        $message_desc = $tresponse->getMessages()[0]->getDescription();
+                        
+                        $paymentID = $refID;
+                        
+                        $ordStatus = 'success';
+                        $statusMsg = 'Your Donation Payment has been Successful!';
+                    } else {
+                        $error = "Transaction Failed! \n";
+                        if ($tresponse->getErrors() != null) {
+                            $error .= " Error Code  : " . $tresponse->getErrors()[0]->getErrorCode() . "<br/>";
+                            $error .= " Error Message : " . $tresponse->getErrors()[0]->getErrorText() . "<br/>";
+                        }
+                        $statusMsg = $error;
+                    }
                 }
                 // Or, print errors if the API request wasn't successful
             } else {
@@ -248,21 +330,23 @@ function verify_google_captcha($captchaRes, $grecaptchaRes, $secretKey)
 	<?php if(!empty($paymentID)){ ?>
 	<h1 class="<?php echo $ordStatus; ?>"><?php echo $statusMsg; ?></h1>
 
-	<h4>Payment Information</h4>
-	<p>
-		<b>Reference Number:</b> <?php echo $paymentID; ?></p>
-	<p>
-		<b>Invoice Number:</b> <?php echo $invoiceNumber; ?></p>
-	<p>
-		<b>Transaction ID:</b> <?php echo $transaction_id; ?></p>
-	<p>
-		<b>Status:</b> <?php echo $responseArr[$payment_response]; ?></p>
+	<h2>Payment Information</h2>
+	<p><b>Reference Number:</b> <?php echo $paymentID; ?></p>
+	<p><b>Invoice Number:</b> <?php echo $invoiceNumber; ?></p>
+	<?php if ($recurringSet) {?>
+	<p><b>Subscription ID:</b> <?php echo $subscriptionId; ?></p>
+	<p><b>Number of Months:</b> <?php echo $numOfMonths; ?></p>
+	<p><b>Status:</b> <?php echo $responseArr[1]; ?></p>
+	    
+	<?php } else {?>
+	<p><b>Transaction ID:</b> <?php echo $transaction_id; ?></p>
+	<p><b>Status:</b> <?php echo $responseArr[$payment_response]; ?></p>
+	<?php } ?>
+	
 
-	<h4>Donation Information</h4>
-	<p>
-		<b>Details:</b> <?php echo str_replace(",", "<br>", $donationItems); ?></p>
-	<p>
-		<b>Amount:</b> $ <?php echo $donationAmount.' '.$currency; ?></p>
+	<h2>Donation Information</h2>
+	<p><b>Details:</b> <?php echo str_replace(",", "<br>", $donationItems); ?></p>
+	<p><b>Amount:</b> $ <?php echo $donationAmount.' '.$currency; ?></p>
 	<?php }else{ ?>
 		<h1 class="error">Your Payment has Failed</h1>
 	<p class="error"><?php echo $statusMsg; ?></p>

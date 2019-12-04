@@ -2,14 +2,10 @@ function ShowHideFreq(reset) {
 	var chkYes = document.getElementById("frequency");
 	var frequency = document.getElementById("freq");
 	frequency.style.display = chkYes.checked ? "block" : "none";
-	// select the checkbox for UMaddcustomer if frequency is checked
-	var addCustCheckBox = document.getElementById("umaddcustomer");
-	addCustCheckBox.checked = chkYes.chcked ? "true" : "false";
-	if (Boolean(reset)) {
-		document.getElementById("idUMschedule").selectedIndex = 0;
-		document.getElementsByName("UMstart")[0].value = "";
-		document.getElementsByName("UMnumleft")[0].value = "";
-
+	// if recurringSelected element is not found and not set to true, then the value for recurringMonths will be cleared
+	var recurringSelected = document.getElementsByName("recurringSelected")[0].value;
+	if (recurringSelected != true) {
+		document.getElementById("recurringMonths").value = "";
 	}
 }
 
