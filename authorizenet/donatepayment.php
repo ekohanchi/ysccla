@@ -270,14 +270,16 @@ if (verify_google_captcha($_POST['spGoogleCaptchaRes'], $_POST['g-recaptcha-resp
                 // Or, print errors if the API request wasn't successful
             } else {
                 $error = "Transaction Failed! \n";
-                $tresponse = $response->getTransactionResponse();
-
-                if ($tresponse != null && $tresponse->getErrors() != null) {
-                    $error .= " Error Code  : " . $tresponse->getErrors()[0]->getErrorCode() . "<br/>";
-                    $error .= " Error Message : " . $tresponse->getErrors()[0]->getErrorText() . "<br/>";
-                } else {
-                    $error .= " Error Code  : " . $response->getMessages()->getMessage()[0]->getCode() . "<br/>";
-                    $error .= " Error Message : " . $response->getMessages()->getMessage()[0]->getText() . "<br/>";
+                if (!$recurringSet) {
+                    $tresponse = $response->getTransactionResponse();
+    
+                    if ($tresponse != null && $tresponse->getErrors() != null) {
+                        $error .= " Error Code  : " . $tresponse->getErrors()[0]->getErrorCode() . "<br/>";
+                        $error .= " Error Message : " . $tresponse->getErrors()[0]->getErrorText() . "<br/>";
+                    } else {
+                        $error .= " Error Code  : " . $response->getMessages()->getMessage()[0]->getCode() . "<br/>";
+                        $error .= " Error Message : " . $response->getMessages()->getMessage()[0]->getText() . "<br/>";
+                    }
                 }
                 $statusMsg = $error;
             }
@@ -317,8 +319,6 @@ function verify_google_captcha($captchaRes, $grecaptchaRes, $secretKey)
     } else {
         return false;
     }
-    
-
 }
 
 ?>

@@ -103,19 +103,6 @@ You can also pay for high holiday tickets or sponsor Shabbat Kiddush through the
                                 <td colspan="2"><b>Credit Card Information:</b></td>
                             </tr>
                             <tr>
-                                <td align="right"><font size="2"color="#ff0000">* </font>Card Type:</td>
-                                <td>
-                                    <p>
-                                        <select size="1" name="payment_type">
-                                            <option value="Visa">Visa</option>
-                                            <option value="MasterCard">MasterCard</option>
-                                            <option value="American Express">American Express</option>
-                                            <option value="Discover">Discover</option>
-                                        </select>
-                                    </p>
-                                </td>
-                            </tr>
-                            <tr>
                                 <td align="right"><font size="2"color="#ff0000">* </font>Name on Card:</td>
                                 <td><input type="text" name="firstName" size="20" value="" placeholder="firstName"><input type="text" name="lastName" size="20" value="" placeholder="lastName"></td>
                             </tr>
