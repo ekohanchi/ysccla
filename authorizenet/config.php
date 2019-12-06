@@ -1,21 +1,28 @@
 <?php
-$ENV = SANDBOX;
-$MERCHANT_LOGIN_ID = "";
-$MERCHANT_TRANSACTION_KEY = "";
+$TEST = true;
 
-//$ENV = PRODUCTION;
-// $MERCHANT_LOGIN_ID = "";
-// $MERCHANT_TRANSACTION_KEY = "";
+if ($TEST) {
+    $ENV = SANDBOX;
+    $MERCHANT_LOGIN_ID = "";
+    $MERCHANT_TRANSACTION_KEY = "";
+    
+    $googleCaptcha_sitekey = "";
+    $googleCaptcha_secretkey = "";
+} else {
+    $ENV = PRODUCTION;
+    $MERCHANT_LOGIN_ID = "";
+    $MERCHANT_TRANSACTION_KEY = "";
+    
+    $googleCaptcha_sitekey = "";
+    $googleCaptcha_secretkey = "";
+}
 
-$googleCaptcha_sitekey = "";
-$googleCaptcha_secretkey = "";
-
-$currency = "USD";  
+$currency = "USD";
 
 // Authorize.Net API configuration
 define('ANET_API_LOGIN_ID', $MERCHANT_LOGIN_ID);
 define('ANET_TRANSACTION_KEY', $MERCHANT_TRANSACTION_KEY);
 
-$ANET_ENV = $ENV; 
+$ANET_ENV = $ENV;
 
 ?>

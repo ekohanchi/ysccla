@@ -67,6 +67,21 @@ You can also pay for high holiday tickets or sponsor Shabbat Kiddush through the
                                 <input type="checkbox" name="purpose" value="Other"> Other<br /></td>
                             </tr>
                             <tr>
+                                <td colspan="2"><b>Donation Frequency</b><br>
+                                <input type="radio" name="frequency" value="One-time" checked="checked" onclick="ShowHideFreq(true)"> One-time<br>
+                                <input type="radio" name="frequency" id="frequency" value="Recurring" onclick="ShowHideFreq(false)"> Recurring<br>
+                                <div id="freq" style="display: none">
+                                <span style="display:inline-block; padding-left: 2em;">
+									<input type="hidden" name="recurringSelected" value="true">
+									Number of months: <input type="text" name="recurringMonths" id="recurringMonths" size=5 maxlength="4" onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 48 && event.charCode <= 57))"><br>
+                                	<font size="1px">&#9830; Enter the number of months this donation will be recurring for.<br></font>
+                                	<input type="checkbox" name="foreverRecurring" id="foreverRecurring" onclick="setRecurringToOngoing()"> Ongoing Recurring<br>
+                                	<font size="1px">&#9830; Clicking this checkbox means the donation will be ongoing and not have an end date.<br></font>
+                                </span>
+                                </div>
+                                <br></td>
+                            </tr>
+                            <tr>
                                 <td colspan="2"><b>Anonymous</b><br>
                                 <input type="checkbox" name="anonymous"> I prefer to make this donation anonymously</td>
                             </tr>
@@ -88,19 +103,6 @@ You can also pay for high holiday tickets or sponsor Shabbat Kiddush through the
                             </tr>
                             <tr>
                                 <td colspan="2"><b>Credit Card Information:</b></td>
-                            </tr>
-                            <tr>
-                                <td align="right"><font size="2"color="#ff0000">* </font>Card Type:</td>
-                                <td>
-                                    <p>
-                                        <select size="1" name="payment_type">
-                                            <option value="Visa">Visa</option>
-                                            <option value="MasterCard">MasterCard</option>
-                                            <option value="American Express">American Express</option>
-                                            <option value="Discover">Discover</option>
-                                        </select>
-                                    </p>
-                                </td>
                             </tr>
                             <tr>
                                 <td align="right"><font size="2"color="#ff0000">* </font>Name on Card:</td>
