@@ -6,6 +6,7 @@ function ShowHideFreq(reset) {
 	var recurringSelected = document.getElementsByName("recurringSelected")[0].value;
 	if (recurringSelected != true) {
 		document.getElementById("recurringMonths").value = "";
+		document.getElementById('foreverRecurring').checked = false;
 	}
 }
 
@@ -22,7 +23,9 @@ function addqty(field, qtyfield) {
 }
 function postSubmission() {
 	if (verifyAmount() == false) {
-		return false;
+		return false;;
+	} else if (verifyNonEmptyRecMonthCount() == false) {
+		return false;;
 	} else if (verifyCC() == false) {
 		return false;
 	} else if (verifyCVV() == false) {
@@ -143,6 +146,34 @@ function collectPurpose() {
 		}
 	}
 	document.getElementsByName("purposeCollection")[0].value = purpose_array;
+}
+function verifyNonEmptyRecMonthCount() {
+	var recurringSelected = document.querySelector('input[name="frequency"]:checked').value
+	if (recurringSelected == "Recurring") {
+		var value = document.getElementById('recurringMonths').value;
+		if(!value.match(/\S/)) {
+	        alert ('There must be a value set for the number of recurring months.');
+	        return false;
+		} else if(value == "0") {
+			alert ('The value set for the number of recurring months must be greater than 0.');
+			return false;
+	    } else {
+	        return true;
+	    }
+	} else {
+		return true;
+	}
+}
+
+function setRecurringToOngoing() {
+	var foreverRec = document.getElementById('foreverRecurring').checked;
+	if (foreverRec) {
+		document.getElementById('recurringMonths').value = "9999";
+		document.getElementById('recurringMonths').readOnly = true;
+	} else {
+		document.getElementById('recurringMonths').value = "";
+		document.getElementById('recurringMonths').readOnly = false;
+	}
 }
 var populateValues = function() {
 	var now = new Date().valueOf();

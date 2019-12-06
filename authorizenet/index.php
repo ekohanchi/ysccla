@@ -73,8 +73,10 @@ You can also pay for high holiday tickets or sponsor Shabbat Kiddush through the
                                 <div id="freq" style="display: none">
                                 <span style="display:inline-block; padding-left: 2em;">
 									<input type="hidden" name="recurringSelected" value="true">
-									Number of months: <input type="text" name="recurringMonths" id="recurringMonths" size=5 maxlength="3" onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 48 && event.charCode <= 57))"><br>
+									Number of months: <input type="text" name="recurringMonths" id="recurringMonths" size=5 maxlength="4" onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 48 && event.charCode <= 57))"><br>
                                 	<font size="1px">&#9830; Enter the number of months this donation will be recurring for.<br></font>
+                                	<input type="checkbox" name="foreverRecurring" id="foreverRecurring" onclick="setRecurringToOngoing()"> Ongoing Recurring<br>
+                                	<font size="1px">&#9830; Clicking this checkbox means the donation will be ongoing and not have an end date.<br></font>
                                 </span>
                                 </div>
                                 <br></td>
