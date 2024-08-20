@@ -49,9 +49,9 @@ You can also pay for high holiday tickets or sponsor Shabbat Kiddush through the
                             <tr>
                                 <td colspan="2"><b>Donation Purpose:</b><br>
                                 <input type="checkbox" name="purpose" value="Pay My contribution ( bought a mitzvah)"> Pay My contribution ( bought a mitzvah)<br />
-                                <input type="checkbox" name="purpose" value="$1540 a year - Partnership for family"> $1540 a year - Partnership for family<br />
-                                <input type="checkbox" name="purpose" value="$1000 a year - Newly wed"> $1000 a year - Newly wed <br />
-                                <input type="checkbox" name="purpose" value="$800 a year - Single"> $800 a year - Single <br />
+                                <input type="checkbox" name="purpose" value="$1800 a year - Partnership for family"> $1800 a year - Partnership for family<br />
+                                <input type="checkbox" name="purpose" value="$1200 a year - Newly wed"> $1200 a year - Newly wed <br />
+                                <input type="checkbox" name="purpose" value="$1000 a year - Single"> $1000 a year - Single <br />
                                 <input type="checkbox" name="purpose" value="$100 - Partner Extra Seats - high holidays" id="hhpes" onclick="addqty('hhpes', 'hhpes_qty_id')"> $100 - Partner Extra Seats - high holidays --- Quantity: <input type="text" name="hhpes_qty" id="hhpes_qty_id" value="0" maxlength="2" size="2"> <br />
                                 <input type="checkbox" name="purpose" value="$500 per seat - Non Members-High Holiday Seats for both Rosh Hashana &#038; Yom Kippur" id="hhry" onclick="addqty('hhry', 'hhry_qty_id')" disabled="disabled"> $500 per seat - Non Members-High Holiday Seats for both Rosh Hashana &#038; Yom Kippur --- Quantity: <input type="text" name="hhry_qty" id="hhry_qty_id" value="0" maxlength="2" size="2"><br />
                                 <input type="checkbox" name="purpose" value="$260 per seat - Non Members-High Holiday Seats-Rosh Hashana" id="hhr" onclick="addqty('hhr', 'hhr_qty_id')" disabled="disabled"> $260 per seat - Non Members-High Holiday Seats-Rosh Hashana --- Quantity: <input type="text" name="hhr_qty" id="hhr_qty_id" value="0" maxlength="2" size="2"><br />
