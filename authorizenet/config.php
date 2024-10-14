@@ -2,14 +2,14 @@
 $TEST = true;
 
 if ($TEST) {
-    $ENV = SANDBOX;
+    $ENV = "SANDBOX";
     $MERCHANT_LOGIN_ID = "";
     $MERCHANT_TRANSACTION_KEY = "";
     
     $googleCaptcha_sitekey = "";
     $googleCaptcha_secretkey = "";
 } else {
-    $ENV = PRODUCTION;
+    $ENV = "PRODUCTION";
     $MERCHANT_LOGIN_ID = "";
     $MERCHANT_TRANSACTION_KEY = "";
     
