@@ -1,3 +1,5 @@
+<!DOCTYPE html>
+<html>
 <head>
 <style>
 .center {
@@ -10,12 +12,12 @@
 <?php
 // Include Authorize.Net PHP sdk
 // require 'anet_sdk_php/autoload.php';
-require 'vendor/autoload.php';
+require_once "vendor/autoload.php";
 use net\authorize\api\contract\v1 as AnetAPI;
 use net\authorize\api\controller as AnetController;
 
 // Include configuration file
-require_once 'config.php';
+require_once "config.php";
 
 $paymentID = $statusMsg = '';
 $ordStatus = 'error';

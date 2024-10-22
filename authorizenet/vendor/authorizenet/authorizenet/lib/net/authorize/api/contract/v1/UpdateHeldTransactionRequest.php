@@ -39,6 +39,7 @@ class UpdateHeldTransactionRequest extends ANetApiRequestType
 
 
     // Json Serialize Code
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(){
         $values = array_filter((array)get_object_vars($this),
         function ($val){
@@ -46,7 +47,7 @@ class UpdateHeldTransactionRequest extends ANetApiRequestType
         });
         $mapper = \net\authorize\util\Mapper::Instance();
         foreach($values as $key => $value){
-            $classDetails = $mapper->getClass(get_class() , $key);
+            $classDetails = $mapper->getClass(get_class($this) , $key);
             if (isset($value)){
                 if ($classDetails->className === 'Date'){
                     $dateTime = $value->format('Y-m-d');
@@ -65,13 +66,8 @@ class UpdateHeldTransactionRequest extends ANetApiRequestType
                 }
             }
         }
-        if (get_parent_class() == ""){
-            return $values;
-        }
-        else{
-            return array_merge(parent::jsonSerialize(), $values);
-        }
+        return array_merge(parent::jsonSerialize(), $values);
     }
-    
+
 }
 

@@ -48,6 +48,21 @@ class CustomerPaymentProfileMaskedType extends CustomerPaymentProfileBaseType im
     private $subscriptionIds = null;
 
     /**
+     * @property string $originalNetworkTransId
+     */
+    private $originalNetworkTransId = null;
+
+    /**
+     * @property float $originalAuthAmount
+     */
+    private $originalAuthAmount = null;
+
+    /**
+     * @property boolean $excludeFromAccountUpdater
+     */
+    private $excludeFromAccountUpdater = null;
+
+    /**
      * Gets as customerProfileId
      *
      * @return string
@@ -235,8 +250,75 @@ class CustomerPaymentProfileMaskedType extends CustomerPaymentProfileBaseType im
         return $this;
     }
 
+    /**
+     * Gets as originalNetworkTransId
+     *
+     * @return string
+     */
+    public function getOriginalNetworkTransId()
+    {
+        return $this->originalNetworkTransId;
+    }
+
+    /**
+     * Sets a new originalNetworkTransId
+     *
+     * @param string $originalNetworkTransId
+     * @return self
+     */
+    public function setOriginalNetworkTransId($originalNetworkTransId)
+    {
+        $this->originalNetworkTransId = $originalNetworkTransId;
+        return $this;
+    }
+
+    /**
+     * Gets as originalAuthAmount
+     *
+     * @return float
+     */
+    public function getOriginalAuthAmount()
+    {
+        return $this->originalAuthAmount;
+    }
+
+    /**
+     * Sets a new originalAuthAmount
+     *
+     * @param float $originalAuthAmount
+     * @return self
+     */
+    public function setOriginalAuthAmount($originalAuthAmount)
+    {
+        $this->originalAuthAmount = $originalAuthAmount;
+        return $this;
+    }
+
+    /**
+     * Gets as excludeFromAccountUpdater
+     *
+     * @return boolean
+     */
+    public function getExcludeFromAccountUpdater()
+    {
+        return $this->excludeFromAccountUpdater;
+    }
+
+    /**
+     * Sets a new excludeFromAccountUpdater
+     *
+     * @param boolean $excludeFromAccountUpdater
+     * @return self
+     */
+    public function setExcludeFromAccountUpdater($excludeFromAccountUpdater)
+    {
+        $this->excludeFromAccountUpdater = $excludeFromAccountUpdater;
+        return $this;
+    }
+
 
     // Json Serialize Code
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(){
         $values = array_filter((array)get_object_vars($this),
         function ($val){
@@ -244,7 +326,7 @@ class CustomerPaymentProfileMaskedType extends CustomerPaymentProfileBaseType im
         });
         $mapper = \net\authorize\util\Mapper::Instance();
         foreach($values as $key => $value){
-            $classDetails = $mapper->getClass(get_class() , $key);
+            $classDetails = $mapper->getClass(get_class($this) , $key);
             if (isset($value)){
                 if ($classDetails->className === 'Date'){
                     $dateTime = $value->format('Y-m-d');
@@ -263,21 +345,16 @@ class CustomerPaymentProfileMaskedType extends CustomerPaymentProfileBaseType im
                 }
             }
         }
-        if (get_parent_class() == ""){
-            return $values;
-        }
-        else{
-            return array_merge(parent::jsonSerialize(), $values);
-        }
+        return array_merge(parent::jsonSerialize(), $values);
     }
-    
+
     // Json Set Code
     public function set($data)
     {
-        if(is_array($data) || is_object($data)) {
+        if(is_array($data) || is_object($data)) {
 			$mapper = \net\authorize\util\Mapper::Instance();
 			foreach($data AS $key => $value) {
-				$classDetails = $mapper->getClass(get_class() , $key);
+				$classDetails = $mapper->getClass(get_class($this) , $key);
 	 
 				if($classDetails !== NULL ) {
 					if ($classDetails->isArray) {

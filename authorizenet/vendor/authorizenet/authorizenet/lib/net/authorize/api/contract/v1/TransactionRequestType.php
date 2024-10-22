@@ -194,6 +194,12 @@ class TransactionRequestType implements \JsonSerializable
     private $shipFrom = null;
 
     /**
+     * @property \net\authorize\api\contract\v1\AuthorizationIndicatorType
+     * $authorizationIndicatorType
+     */
+    private $authorizationIndicatorType = null;
+
+    /**
      * Gets as transactionType
      *
      * @return string
@@ -1087,8 +1093,32 @@ class TransactionRequestType implements \JsonSerializable
         return $this;
     }
 
+    /**
+     * Gets as authorizationIndicatorType
+     *
+     * @return \net\authorize\api\contract\v1\AuthorizationIndicatorType
+     */
+    public function getAuthorizationIndicatorType()
+    {
+        return $this->authorizationIndicatorType;
+    }
+
+    /**
+     * Sets a new authorizationIndicatorType
+     *
+     * @param \net\authorize\api\contract\v1\AuthorizationIndicatorType
+     * $authorizationIndicatorType
+     * @return self
+     */
+    public function setAuthorizationIndicatorType(\net\authorize\api\contract\v1\AuthorizationIndicatorType $authorizationIndicatorType)
+    {
+        $this->authorizationIndicatorType = $authorizationIndicatorType;
+        return $this;
+    }
+
 
     // Json Serialize Code
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(){
         $values = array_filter((array)get_object_vars($this),
         function ($val){
@@ -1096,7 +1126,7 @@ class TransactionRequestType implements \JsonSerializable
         });
         $mapper = \net\authorize\util\Mapper::Instance();
         foreach($values as $key => $value){
-            $classDetails = $mapper->getClass(get_class() , $key);
+            $classDetails = $mapper->getClass(get_class($this) , $key);
             if (isset($value)){
                 if ($classDetails->className === 'Date'){
                     $dateTime = $value->format('Y-m-d');
@@ -1115,21 +1145,16 @@ class TransactionRequestType implements \JsonSerializable
                 }
             }
         }
-        if (get_parent_class() == ""){
-            return $values;
-        }
-        else{
-            return array_merge(parent::jsonSerialize(), $values);
-        }
+        return $values;
     }
     
     // Json Set Code
     public function set($data)
     {
-        if(is_array($data) || is_object($data)) {
+        if(is_array($data) || is_object($data)) {
 			$mapper = \net\authorize\util\Mapper::Instance();
 			foreach($data AS $key => $value) {
-				$classDetails = $mapper->getClass(get_class() , $key);
+				$classDetails = $mapper->getClass(get_class($this) , $key);
 	 
 				if($classDetails !== NULL ) {
 					if ($classDetails->isArray) {
